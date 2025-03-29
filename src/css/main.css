@@ -1,0 +1,167 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgb(216, 174, 211);
+  background: radial-gradient(
+    circle,
+    rgba(216, 174, 211, 1) 0%,
+    rgba(145, 130, 196, 1) 100%
+  );
+}
+
+.header-small {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.header__logo-small {
+  width: auto;
+  height: 50px;
+  margin-right: 1rem;
+}
+
+.container {
+  margin-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.search {
+  margin-right: 1rem;
+}
+
+.search,
+.logo {
+  display: flex;
+  justify-content: center;
+  border-radius: 0.5rem;
+}
+
+.search__field {
+  padding: 0.5rem;
+  border-radius: 0.5rem 0 0 0.5rem;
+  width: 558px;
+  height: 40px;
+  background-color: #ebd9dd;
+  border: none;
+  font-size: large;
+}
+
+.submit {
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 0.5rem;
+  width: 40px;
+  height: 40px;
+  background-color: #ebd9dd;
+  border: none;
+  margin-left: 2px;
+}
+
+svg {
+  width: 24px;
+  height: 24px;
+  filter: invert(16%) sepia(29%) saturate(6202%) hue-rotate(253deg)
+    brightness(82%) contrast(124%);
+}
+
+.search__field:hover {
+  opacity: 0.8;
+  border: 1px solid #d8aed3;
+}
+
+.search__field:focus,
+.submit:focus {
+  outline: 1px solid #9182c4;
+}
+
+.submit:hover {
+  border: 1px solid #d8aed3;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.pagination {
+  background-color: #fff2f2;
+  display: inline;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.pagination__current {
+  background-color: #ebd9dd;
+  font-size: larger;
+  padding: 0.1rem;
+  border: 1px solid #888;
+}
+
+.results {
+  list-style: none;
+  background-color: #fff2f2;
+  width: 80vw;
+  border-radius: 1rem;
+  opacity: 0.9;
+  margin: 1rem 0 1rem 0;
+  overflow: hidden;
+}
+
+.doc {
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 1px dashed #333;
+  margin: 0 1rem 0 1rem;
+  padding: 1rem;
+}
+
+.doc:last-child {
+  border-bottom: none;
+}
+.infos {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+}
+
+.author {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+a:link,
+a:visited,
+a:active {
+  color: #413c69;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+.cover img {
+  width: 180px;
+  height: auto;
+}
+
+.hidden {
+  display: none;
+}

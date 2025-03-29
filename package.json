@@ -1,0 +1,24 @@
+{
+  "name": "elbook",
+  "version": "1.0.0",
+  "description": "Search books app",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zknouri/elbook.git"
+  },
+  "author": "Zakaria NAOURI",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zknouri/elbook/issues"
+  },
+  "homepage": "https://github.com/zknouri/elbook#readme",
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.14.1",
+    "@parcel/transformer-webmanifest": "^2.14.1",
+    "parcel": "^2.14.1"
+  }
+}

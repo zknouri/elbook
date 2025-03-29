@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>elbook</title>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./src/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./src/img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./src/img/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./src/img/site.webmanifest" />
+    <link rel="stylesheet" href="./src/css/main.css" />
+    <script defer type="module" src="./src/js/controller.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo">
+        <img src="./src/img/elbook-1.png" alt="elbook" class="header__logo" />
+      </div>
+      <div class="search">
+        <form class="search">
+          <input
+            type="search"
+            name=""
+            class="search__field"
+            placeholder="Search for books, authors, and more"
+            autofocus
+          />
+          <button class="submit">
+            <!-- <img src="./src/img/icons.svg#icon-search" alt="search" /> -->
+            <svg>
+              <use href="./src/img/icons.svg#icon-search"></use>
+            </svg>
+          </button>
+        </form>
+      </div>
+      <div><p class="results__number"></p></div>
+    </div>
+    <div class="container">
+      <div class="pagination hidden">
+        <a class="page--offset" href="#"> <<- First</a>
+        <a class="page--offset" href="#"> <- Previsous</a>
+        <span class="pagination__current">1</span>
+        <a class="page--offset" href="#">2</a>
+        <a class="page--offset" href="#">3</a>
+        <a class="page--offset" href="#">Next -></a>
+        <a class="page--offset" href="#">Last ->></a>
+      </div>
+      <ul class="results">
+        <!-- <li class="doc">
+          <div class="cover">cover <img src="#" alt="" /></div>
+          <div class="infos">
+            <div class="flex">
+              <a href="" class="title"><h2>title</h2></a>
+            </div>
+            <div class="flex">
+              <svg class="info__svg">
+                <use href="./src/img/icons.svg#icon-person"></use>
+              </svg>
+              <a href="" class="author"><h3>author</h3></a>
+            </div>
+
+            <div class="flex">
+              <svg>
+                <use href="./src/img/icons.svg#icon-calendar"></use>
+              </svg>
+              <svg>
+                <use href="./src/img/icons.svg#icon-book"></use>
+              </svg>
+              <svg>
+                <use href="./src/img/icons.svg#icon-language"></use>
+              </svg>
+            </div>
+          </div>
+        </li> -->
+      </ul>
+      <div class="pagination hidden"></div>
+    </div>
+  </body>
+</html>
