@@ -1,10 +1,13 @@
 class PaginationView {
-  #parentEl = document.querySelectorAll(".pagination");
+  #resultsPagination = document.querySelectorAll(".resutls-pagination");
+  #authorWorksPagination = document.querySelectorAll(
+    ".author-works-pagination"
+  );
 
-  render(offset, numberResultsFound) {
+  renderResultsPagination(offset, numberResultsFound) {
     this.#clear();
     const markup = this.#generateMarkup(offset, numberResultsFound);
-    this.#parentEl.forEach((el) => {
+    this.#resultsPagination.forEach((el) => {
       el.classList.remove("hidden");
       if (markup === undefined) {
         el.classList.add("hidden");
@@ -14,13 +17,39 @@ class PaginationView {
     });
   }
 
-  addHandlerPagination(handler) {
-    this.#parentEl.forEach((el) => {
-      el.addEventListener("click", function (e) {
-        const target = e.target.closest(".page--offset");
-        if (!target) return;
+  renderAuthorWorksPagination(offset, numberOfWorks) {
+    this.#clear();
+    const markup = this.#generateMarkup(offset, numberOfWorks);
+    this.#authorWorksPagination.forEach((el) => {
+      el.classList.remove("hidden");
+      if (markup === undefined) {
+        el.classList.add("hidden");
+        return;
+      }
+      el.insertAdjacentHTML("afterbegin", markup);
+    });
+  }
 
-        const offset = +target.dataset.offset;
+  addHandlerResultsPagination(handler) {
+    this.#resultsPagination.forEach((el) => {
+      el.addEventListener("click", function (e) {
+        const page = e.target.closest(".page--offset");
+        if (!page) return;
+
+        const offset = +page.dataset.offset;
+
+        handler(offset);
+      });
+    });
+  }
+
+  addHandlerAuthorWorksPagination(handler) {
+    this.#authorWorksPagination.forEach((el) => {
+      el.addEventListener("click", function (e) {
+        const page = e.target.closest(".page--offset");
+        if (!page) return;
+
+        const offset = +page.dataset.offset;
 
         handler(offset);
       });
@@ -28,7 +57,14 @@ class PaginationView {
   }
 
   #clear() {
-    this.#parentEl.forEach((el) => (el.innerHTML = ""));
+    this.#resultsPagination.forEach((el) => {
+      el.innerHTML = "";
+      el.classList;
+    });
+    this.#authorWorksPagination.forEach((el) => {
+      el.innerHTML = "";
+      el.classList;
+    });
   }
 
   #generateMarkup(offset, numberResultsFound) {

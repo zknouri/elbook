@@ -20,5 +20,9 @@
     "@parcel/packager-raw-url": "^2.14.1",
     "@parcel/transformer-webmanifest": "^2.14.1",
     "parcel": "^2.14.1"
+  },
+  "dependencies": {
+    "@freearhey/iso-639-3": "^1.0.0",
+    "iso-639-3": "^3.0.1"
   }
 }
