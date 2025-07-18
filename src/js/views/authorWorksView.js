@@ -5,24 +5,46 @@ class AuthorWorksView {
   #parentEl = document.querySelector(".results");
   #pageTitle = document.querySelector(".page-title");
   #resultsNumber = document.querySelector(".results__number");
+  #body = document.querySelector("body");
   #data;
 
+  /**
+   * Render Author related Works view
+   * @param {Object} data - Author related Works data to be rendered
+   */
   render(data) {
     this.#data = data;
     this.#clear();
     const markup = this.#generateMarkup(this.#data);
-    this.#renderPageTitle(this.#data);
+    this.#renderPageTitle(this.#data.authorName);
     this.#parentEl.insertAdjacentHTML("afterbegin", markup);
     this.#addHandlerHideShowAuthorWorksInfos();
     this.#resultsNumber.innerHTML = `${this.#data.numberOfWorks} results.`;
+    this.#body.querySelector(".loading-spinner").classList.add("hidden");
   }
 
-  #renderPageTitle(data) {
+  /**
+   * Render loading spinner
+   */
+  showLoadingSpinner() {
+    this.#clear();
+    this.#body.querySelector(".loading-spinner").classList.remove("hidden");
+  }
+
+  /**
+   * Render Page Title
+   * @param {string} authorName - Author name for page title
+   */
+  #renderPageTitle(authorName) {
     this.#pageTitle.querySelector(
       "h1"
-    ).innerHTML = `Works related to ${data.authorName}`;
+    ).innerHTML = `Works related to ${authorName}`;
   }
 
+  /**
+   * Add Event listener to Author Works link
+   * @param {void} handler - Author Works Controller
+   */
   addHandlerAuthorWorks(handler) {
     this.#parentEl.addEventListener("click", function (e) {
       e.preventDefault();
@@ -33,11 +55,17 @@ class AuthorWorksView {
     });
   }
 
+  /**
+   * Clear results container
+   */
   #clear() {
     this.#parentEl.innerHTML = "";
     this.#pageTitle.querySelector("h1").innerHTML = "";
   }
 
+  /**
+   * Add Event Listener for hiding or showing Author Works content(Description, Subjects, Subject Times, Subject Peoplen Subject Places)
+   */
   #addHandlerHideShowAuthorWorksInfos() {
     this.#parentEl.addEventListener("click", function (e) {
       const description = e.target.closest(".description");
@@ -116,6 +144,11 @@ class AuthorWorksView {
     });
   }
 
+  /**
+   * Generate Author Works Markup
+   * @param {Object} data - Author Works
+   * @returns - Markup
+   */
   #generateMarkup(data) {
     return data.works
       .map(

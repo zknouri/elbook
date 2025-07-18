@@ -1,11 +1,19 @@
-const headers = new Headers({
-  "User-Agent": "elbook/1.0 (zakariaenouri@gmail.com)",
-});
+/**
+ *  App Identification Headers
+ */
+// const headers = new Headers({
+//   "User-Agent": "elbook/1.0 (youremail@gmail.com)",
+// });
 const options = {
   method: "GET",
   headers: headers,
 };
 
+/**
+ * AJAX API calls
+ * @param {string} url - API url
+ * @returns - Data
+ */
 export const AJAX = async function (url) {
   try {
     const res = await fetch(url, options);

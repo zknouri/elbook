@@ -12,35 +12,97 @@ class ResultsView {
   #authorWorksPagination = document.querySelectorAll(
     ".author-works-pagination"
   );
+  #errorMessage =
+    "No results were found for your query. Please try again or check your query!";
   #data;
+  #numberOfResults;
 
+  /**
+   * Clear results container
+   */
   #clear() {
     this.#parentEl.innerHTML = "";
     this.#pageTitle.querySelector("h1").innerHTML = "";
   }
 
-  #resultsPageLayout(resultsNumber) {
-    this.#body.style.justifyContent = "normal";
-    this.#body.style.alignItems = "normal";
-    this.#body.style.marginLeft = "20%";
-    this.#header.classList.add("header-small");
-    this.#smallHeaderLogo.classList.add("header__logo-small");
-    this.#resultsNumber.innerHTML = `${resultsNumber} results.`;
-    this.#authorWorksPagination.forEach((el) => el.classList.add("hidden"));
-  }
-
+  /**
+   * Render Search Results view
+   * @param {Object} data - Search Results data to be rendered
+   * @param {number} resultsNumber - Number of results
+   * @returns - Error if there no results found
+   */
   render(data, resultsNumber) {
+    this.#numberOfResults = resultsNumber;
+    if (this.#numberOfResults === 0) return this.renderError();
     this.#data = data;
     this.#clear();
     const markup = this.#generateMarkup();
-    this.#resultsPageLayout(resultsNumber);
+    this.#resultsPageLayout(this.#numberOfResults);
     this.#parentEl.insertAdjacentHTML("afterbegin", markup);
   }
 
+  /**
+   * Update Results page layout
+   */
+  #resultsPageLayout() {
+    this.#body.classList.add("results__body");
+    this.#header.classList.add("header-small");
+    this.#smallHeaderLogo.classList.add("header__logo-small");
+    this.#smallHeaderLogo.classList.remove("header__logo");
+    this.#resultsNumber.innerHTML = `${this.#numberOfResults} results.`;
+    this.#authorWorksPagination.forEach((el) => el.classList.add("hidden"));
+    this.#body.querySelector(".loading-spinner").classList.add("hidden");
+  }
+
+  /**
+   * Render loading spinner
+   */
+  showLoadingSpinner() {
+    const markup = `
+    <div class="loading-spinner">
+      <svg class="spinner__svg">
+        <use href="${icons}#icon-loading"></use>
+      </svg>
+    </div>
+    `;
+    this.#clear();
+    this.#body.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  /**
+   * Render Error Message
+   * @param {string} message - To be Rendered
+   */
+  renderError(message = this.#errorMessage) {
+    const markup = `
+    <li class="doc">
+      <div class="flex" style="align-items: center;">
+        <svg class="info__svg">
+          <use href="${icons}#icon-alert"></use>
+        </svg>
+        <p>${message}</p>
+        </div>
+    </li>
+    `;
+    this.#clear();
+    this.#resultsPageLayout();
+    this.#parentEl.insertAdjacentHTML("afterbegin", markup);
+    this.#body.querySelector(".loading-spinner").classList.add("hidden");
+  }
+
+  /**
+   * Generate Markup by joining an Array of list items
+   * @returns - Markup
+   */
   #generateMarkup() {
     return this.#data.map(this.#generateMarkupPreview).join("");
   }
 
+  /**
+   * Generate one List item for each result
+   * @param {Object} result - Search Results
+   * @returns - List item Markup
+   */
   #generateMarkupPreview(result) {
     return `
         <li class="doc">

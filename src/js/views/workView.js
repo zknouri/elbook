@@ -10,24 +10,46 @@ class WorkView {
   );
   #resultsNumber = document.querySelector(".results__number");
   #searchField = document.querySelector(".search__field");
+  #body = document.querySelector("body");
   #data;
 
+  /**
+   * Render Work view
+   * @param {Object} data - Work data to be rendered
+   */
   render(data) {
     this.#data = data;
     this.#clear();
-    this.#resultsPagination.forEach((el) => el.classList.add("hidden"));
-    this.#authorWorksPagination.forEach((el) => el.classList.add("hidden"));
+
     const markup = this.#generateMarkup(this.#data);
     this.#parentEl.insertAdjacentHTML("afterbegin", markup);
     this.#workPageLayout();
     this.addHandlerHideShowWorkInfos();
   }
 
+  /**
+   * Render loading spinner
+   */
+  showLoadingSpinner() {
+    this.#clear();
+    this.#body.querySelector(".loading-spinner").classList.remove("hidden");
+  }
+
+  /**
+   * Update Work page layout
+   */
   #workPageLayout() {
     this.#resultsNumber.innerHTML = "";
     this.#searchField.value = "";
+    this.#resultsPagination.forEach((el) => el.classList.add("hidden"));
+    this.#authorWorksPagination.forEach((el) => el.classList.add("hidden"));
+    this.#body.querySelector(".loading-spinner").classList.add("hidden");
   }
 
+  /**
+   * Add Event listener to the Work title link
+   * @param {void} handler - Author Controller
+   */
   addHandlerWork(handler) {
     this.#parentEl.addEventListener("click", function (e) {
       e.preventDefault();
@@ -38,6 +60,9 @@ class WorkView {
     });
   }
 
+  /**
+   * Add Event Listener for hiding or showing Work page content(Subjects, Subject Times, Subject People)
+   */
   addHandlerHideShowWorkInfos() {
     this.#parentEl.addEventListener("click", function (e) {
       const subjects = e.target.closest(".subjects");
@@ -89,20 +114,30 @@ class WorkView {
     });
   }
 
+  /**
+   * Clear results container
+   */
   #clear() {
     this.#parentEl.innerHTML = "";
   }
 
+  /**
+   * Generte Work Markup
+   * @param {Object} work - Data
+   * @returns - Markup
+   */
   #generateMarkup(work) {
     return `
         <li class="doc">
-          <div class="cover"><img src="${
-            work.cover
-              ? `https://covers.openlibrary.org/b/olid/${work.cover}-L.jpg" alt="${work.author}`
-              : `${missingCover}`
-          }" />
-          
-              
+          <div class="cover-box">
+            <div class="cover">
+              <img src="${
+                work.cover
+                  ? `https://covers.openlibrary.org/b/olid/${work.cover}-L.jpg" alt="${work.author}`
+                  : `${missingCover}`
+              }" />
+          </div>
+            <div class="work-box">
               ${
                 work.author
                   ? `<div class="flex" title="Author"><svg class="info__svg"><use href="${icons}#icon-person"></use></svg><span class="infos-text">${work.author
@@ -140,10 +175,9 @@ class WorkView {
                       .join(", ")}</span></div>`
                   : ""
               }
-            
+            </div>
           </div>
-          
-          
+
           <div class="infos">
             <div class="flex" title="Title">
               <h2>${work.title}</h2>

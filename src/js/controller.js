@@ -6,88 +6,138 @@ import resultsView from "./views/resultsView.js";
 import searchView from "./views/searchView.js";
 import workView from "./views/workView.js";
 
+/**
+ * Search Results Controller
+ */
 const controlSearchResults = async function () {
-  // 1) Get search query from searchView
-  const query = searchView.getQuery();
+  try {
+    // 1) Get search query from searchView
+    const query = searchView.getQuery();
 
-  // 2) Loading search results in model
-  await model.loadSerchResults(query);
+    // 2) Render loading spinner
+    resultsView.showLoadingSpinner();
 
-  // 3) Rendering search results in resultsView
-  resultsView.render(
-    model.state.search.results,
-    model.state.search.numberResultsFound
-  );
+    // 3) Loading search results in model
+    await model.loadSearchResults(query);
 
-  // 4) render search results pagination
-  paginationView.renderResultsPagination(
-    0,
-    model.state.search.numberResultsFound
-  );
+    // 4) Rendering search results in resultsView
+    resultsView.render(
+      model.state.search.results,
+      model.state.search.numberResultsFound
+    );
+
+    // 4) render search results pagination
+    paginationView.renderResultsPagination(
+      0,
+      model.state.search.numberResultsFound
+    );
+  } catch (error) {
+    resultsView.renderError(error);
+  }
 };
 
+/**
+ * Results Pagination Controller
+ * @param {number} offset - Data offset for pagination
+ */
 const controlResultsPagination = async function (offset) {
-  // 1) load new pagination results
-  await model.loadSerchResults(model.state.query, offset);
+  // 1) Render loading spinner
+  resultsView.showLoadingSpinner();
 
-  // 2) render new pagination results
+  // 2) load new pagination results
+  await model.loadSearchResults(model.state.query, offset);
+
+  // 3) render new pagination results
   resultsView.render(
     model.state.search.results,
     model.state.search.numberResultsFound
   );
 
-  // 3) render new pagination
+  // 4) render new pagination
   paginationView.renderResultsPagination(
     offset,
     model.state.search.numberResultsFound
   );
 };
 
+/**
+ * Work Controller
+ * @param {string} key - Work key from resultsView
+ */
 const controlWork = async function (key) {
-  // 1) load Work data in model
+  // 1) Render loading spinner
+  workView.showLoadingSpinner();
+
+  // 2) load Work data in model
   await model.loadWork(key);
-  // 2) Render Work data in WorkView
+
+  // 3) Render Work data in WorkView
   workView.render(model.state.work);
 };
 
+/**
+ * Author Controller
+ * @param {string} key - Author key from resultsView or workView
+ */
 const controlAuthor = async function (key) {
-  // 1) Load Author data in model
+  // 1) Render loading spinner
+  authorView.showLoadingSpinner();
+
+  // 2) Load Author data in model
   await model.loadAuthor(key);
-  // 2) Render Author data in AuthorView
+
+  // 3) Render Author data in AuthorView
   authorView.render(model.state.author);
 };
 
+/**
+ * Author Works Pagination Controller
+ * @param {number} offset - Data offset for pagination
+ */
 const controlAuthorWorksPagination = async function (offset) {
-  // 1) load new pagination results
+  // 1) Render loading spinner
+  authorWorksView.showLoadingSpinner();
+
+  // 2) load new pagination results
   await model.loadAuthorWorks(model.state.author.key, offset);
 
-  // 2) render new pagination results
+  // 3) render new pagination results
   authorWorksView.render(
     model.state.authorWorks,
     model.state.authorWorks.numberOfWorks
   );
 
-  // 3) render new pagination
+  // 4) render new pagination
   paginationView.renderAuthorWorksPagination(
     offset,
     model.state.authorWorks.numberOfWorks
   );
 };
 
+/**
+ * Author Works Controller
+ * @param {string} key - Author key from authorWorksView
+ */
 const controlAuthorWorks = async function (key) {
-  // 1) Load Author Works
+  // 1) Render loading spinner
+  authorWorksView.showLoadingSpinner();
+
+  // 2) Load Author Works
   await model.loadAuthorWorks(key);
 
-  // 2) Render Author Works data in AuthorWorksView
+  // 3) Render Author Works data in AuthorWorksView
   authorWorksView.render(model.state.authorWorks);
 
-  // 3) render author works pagination
+  // 4) Render author works pagination
   paginationView.renderAuthorWorksPagination(
     0,
     model.state.authorWorks.numberOfWorks
   );
 };
 
+/**
+ * Initialise Event Handlers
+ */
 const init = function () {
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerResultsPagination(controlResultsPagination);

@@ -9,25 +9,47 @@ class AuthorView {
   );
   #resultsNumber = document.querySelector(".results__number");
   #searchField = document.querySelector(".search__field");
+  #body = document.querySelector("body");
   #data;
 
+  /**
+   * Render Author view
+   * @param {Object} data - Author data to be rendered
+   */
   render(data) {
     this.#data = data;
     this.#clear();
-    this.#resultsPagination.forEach((el) => el.classList.add("hidden"));
-    this.#authorWorksPagination.forEach((el) => el.classList.add("hidden"));
+
     const markup = this.#generateMarkup(this.#data);
     this.#parentEl.insertAdjacentHTML("afterbegin", markup);
     this.#authorPageLayout();
     this.#addHandlerHideShowAuthorInfos();
   }
 
+  /**
+   * Render loading spinner
+   */
+  showLoadingSpinner() {
+    this.#clear();
+    this.#body.querySelector(".loading-spinner").classList.remove("hidden");
+  }
+
+  /**
+   * Update Author page layout
+   */
   #authorPageLayout() {
     this.#parentEl.querySelector(".doc").style.display = "block";
     this.#resultsNumber.innerHTML = "";
     this.#searchField.value = "";
+    this.#resultsPagination.forEach((el) => el.classList.add("hidden"));
+    this.#authorWorksPagination.forEach((el) => el.classList.add("hidden"));
+    this.#body.querySelector(".loading-spinner").classList.add("hidden");
   }
 
+  /**
+   * Add Event listener to the Author Name link
+   * @param {void} handler - Author Controller
+   */
   addHandlerAuthor(handler) {
     this.#parentEl.addEventListener("click", function (e) {
       e.preventDefault();
@@ -40,10 +62,16 @@ class AuthorView {
     });
   }
 
+  /**
+   * Clear results container
+   */
   #clear() {
     this.#parentEl.innerHTML = "";
   }
 
+  /**
+   * Add Event Listener for hiding or showing Author page content(Bio, Alternate Names, ID Numbers)
+   */
   #addHandlerHideShowAuthorInfos() {
     this.#parentEl.addEventListener("click", function (e) {
       const authorBio = e.target.closest(".author-bio");
@@ -96,6 +124,11 @@ class AuthorView {
     });
   }
 
+  /**
+   * Generte Author Markup
+   * @param {Object} author - Data
+   * @returns - Markup
+   */
   #generateMarkup(author) {
     return `
       <li class="doc">
