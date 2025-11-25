@@ -1,9 +1,9 @@
 /**
  *  App Identification Headers
  */
-// const headers = new Headers({
-//   "User-Agent": "elbook/1.0 (youremail@gmail.com)",
-// });
+const headers = new Headers({
+  "User-Agent": "elbook/1.0 (youremail@gmail.com)",
+});
 const options = {
   method: "GET",
   headers: headers,
